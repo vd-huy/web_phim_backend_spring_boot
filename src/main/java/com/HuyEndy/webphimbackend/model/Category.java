@@ -20,8 +20,8 @@ public class Category {
 
     private String title;
     private String description;
-    private Boolean status;
     private String slug;
+    private Boolean status;
 
     @ManyToMany
     private List<Movie> movies = new ArrayList<>();

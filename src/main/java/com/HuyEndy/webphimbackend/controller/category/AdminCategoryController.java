@@ -19,7 +19,7 @@ public class AdminCategoryController {
     private SlugService slugService;
 
     @GetMapping("/{id}")
-    public Category getCategoryById(@PathVariable Long id) throws Exception {
+    public Category getCategoryById(@RequestHeader("Authorization") String jwt,@PathVariable Long id) throws Exception {
 
         Optional<Category> optional = categoryService.getCategoryById(id);
 
@@ -31,7 +31,7 @@ public class AdminCategoryController {
     }
 
     @PostMapping
-    public Category createCategory(@RequestBody Category req) {
+    public Category createCategory(@RequestHeader("Authorization") String jwt,@RequestBody Category req) {
 
         Category category = new Category();
         category.setTitle(req.getTitle());
@@ -43,7 +43,7 @@ public class AdminCategoryController {
     }
 
     @PutMapping("/{id}")
-    public Category updateCategory(@PathVariable Long id, @RequestBody Category req) throws Exception {
+    public Category updateCategory(@RequestHeader("Authorization") String jwt,@PathVariable Long id, @RequestBody Category req) throws Exception {
         Optional<Category> optional = categoryService.getCategoryById(id);
 
         if (optional.isEmpty() ){
@@ -60,7 +60,7 @@ public class AdminCategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable Long id) {
+    public void deleteCategory(@RequestHeader("Authorization") String jwt,@PathVariable Long id) {
         categoryService.deleteCategory(id);
     }
 

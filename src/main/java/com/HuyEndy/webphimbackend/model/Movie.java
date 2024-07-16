@@ -35,9 +35,9 @@ public class Movie {
 
     private String slug;
 
-    private Date createdAt;
+    private LocalDate createdAt;
 
-    private Date updatedTime;
+    private LocalDate updatedTime;
 
     @ManyToMany
     private List<Category> categories = new ArrayList<>();

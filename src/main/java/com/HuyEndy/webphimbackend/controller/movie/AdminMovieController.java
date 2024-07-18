@@ -1,6 +1,7 @@
 package com.HuyEndy.webphimbackend.controller.movie;
 
 import com.HuyEndy.webphimbackend.dto.MovieDTO;
+import com.HuyEndy.webphimbackend.dto.MovieUpdateDTO;
 import com.HuyEndy.webphimbackend.model.Category;
 import com.HuyEndy.webphimbackend.model.Country;
 import com.HuyEndy.webphimbackend.model.Genre;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -42,9 +44,11 @@ public class AdminMovieController {
 
         Movie movie = new Movie();
         movie.setTitle(req.getTitle());
+        movie.setOriginName(req.getOriginName());
         movie.setDescription(req.getDescription());
         movie.setStatus(req.getStatus());
         movie.setSlug(slugService.toSlug(req.getTitle()));
+        movie.setSlugOriginName(slugService.toSlug(req.getOriginName()));
         movie.setImage(req.getImage());
         movie.setTime(req.getTime() + " phút/tập");
         movie.setYear(req.getYear());
@@ -63,13 +67,17 @@ public class AdminMovieController {
             category.getMovies().add(movie);
         }
 
-        // Set country
-        Country country = countryRepository.findById(req.getCountryId())
-                .orElseThrow(() -> new RuntimeException("Country not found"));
-        movie.setCountry(country);
+        // Set categories
+        List<Country> countries = req.getCountryIds().stream()
+                .map(countryRepository::findById)
+                .map(optional -> optional.orElseThrow(() -> new RuntimeException("Country not found")))
+                .collect(Collectors.toList());
+        movie.setCountries(countries);
 
         // add movie into genres
-        country.getMovies().add(movie);
+        for (Country country : countries) {
+            country.getMovies().add(movie);
+        }
 
         // Set genres
         List<Genre> genres = req.getGenreIds().stream()
@@ -83,6 +91,31 @@ public class AdminMovieController {
             genre.getMovies().add(movie);
         }
 
-        return movieService.createOrUpdateGenre(movie) ;
+        return movieService.createOrUpdateMovie(movie) ;
     }
+
+    @PutMapping("/{id}")
+    public Movie updateMovie (  @PathVariable Long id,
+                                @RequestHeader("Authorization") String jwt,
+                                @RequestBody MovieUpdateDTO req){
+        Optional<Movie> optionalMovie = movieService.getMovieById(id);
+
+        Movie existingMovie = optionalMovie.orElseThrow(() -> new RuntimeException("Movie not found with id: " + id));
+
+
+        // Update basic movie details
+        existingMovie.setTitle(req.getTitle());
+        existingMovie.setOriginName(req.getOriginName());
+        existingMovie.setDescription(req.getDescription());
+        existingMovie.setStatus(req.getStatus());
+        existingMovie.setSlug(slugService.toSlug(req.getTitle()));
+        existingMovie.setSlugOriginName(slugService.toSlug(req.getOriginName()));
+        existingMovie.setImage(req.getImage());
+        existingMovie.setTime(req.getTime() + " phút/tập");
+        existingMovie.setYear(req.getYear());
+        existingMovie.setUpdatedTime(LocalDate.now());
+
+        return movieService.createOrUpdateMovie(existingMovie);
+    }
+
 }

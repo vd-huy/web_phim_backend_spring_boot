@@ -1,5 +1,6 @@
 package com.HuyEndy.webphimbackend.controller.country;
 
+import com.HuyEndy.webphimbackend.dto.CountryDTO;
 import com.HuyEndy.webphimbackend.model.Country;
 import com.HuyEndy.webphimbackend.service.country.CountryService;
 import com.HuyEndy.webphimbackend.service.slug.SlugService;
@@ -31,7 +32,7 @@ public class AdminCountryController {
     }
 
     @PostMapping
-    public Country createCountry(@RequestHeader("Authorization") String jwt,@RequestBody Country req) {
+    public Country createCountry(@RequestHeader("Authorization") String jwt,@RequestBody CountryDTO req) {
 
         Country country = new Country();
         country.setTitle(req.getTitle());
@@ -43,7 +44,7 @@ public class AdminCountryController {
     }
 
     @PutMapping("/{id}")
-    public Country updateCountry(@RequestHeader("Authorization") String jwt,@PathVariable Long id, @RequestBody Country req) throws Exception {
+    public Country updateCountry(@RequestHeader("Authorization") String jwt,@PathVariable Long id, @RequestBody CountryDTO req) throws Exception {
         Optional<Country> optional = countryService.getCountryById(id);
 
         if (optional.isEmpty() ){

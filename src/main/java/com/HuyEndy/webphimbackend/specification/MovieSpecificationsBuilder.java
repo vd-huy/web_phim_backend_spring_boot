@@ -11,8 +11,8 @@ public class MovieSpecificationsBuilder {
     public Specification<Movie> build(MovieFilterDTO movieFilter) {
         Specification<Movie> spec = Specification.where(null);
 
-        if (movieFilter.getTitle() != null) {
-            spec = spec.and(MovieSpecification.hasTitle(movieFilter.getTitle()));
+        if (movieFilter.getSlug() != null) {
+            spec = spec.and(MovieSpecification.hasSlug(movieFilter.getSlug()));
         }
         if (movieFilter.getGenre() != null) {
             spec = spec.and(MovieSpecification.hasGenre(movieFilter.getGenre()));

@@ -1,5 +1,7 @@
 package com.HuyEndy.webphimbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,10 +21,11 @@ public class Country {
 
     private String title;
     private String description;
-    private Boolean status;
     private String slug;
+    private Boolean status;
 
-    @OneToMany
+    @ManyToMany
+    @JsonBackReference
     private List<Movie> movies = new ArrayList<>();
 
 }

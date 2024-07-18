@@ -1,18 +1,18 @@
 package com.HuyEndy.webphimbackend.dto;
 
 public class MovieFilterDTO {
-    private String title;
+    private String slug;
     private String genre;
     private String country;
     private String category;
     private Integer year;
 
-    public String getTitle() {
-        return title;
+    public String getSlug() {
+        return slug;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     public String getGenre() {

@@ -1,5 +1,6 @@
 package com.HuyEndy.webphimbackend.controller.genre;
 
+import com.HuyEndy.webphimbackend.dto.GenreDTO;
 import com.HuyEndy.webphimbackend.model.Genre;
 import com.HuyEndy.webphimbackend.service.genre.GenreService;
 import com.HuyEndy.webphimbackend.service.slug.SlugService;
@@ -31,7 +32,7 @@ public class AdminGenreController {
     }
 
     @PostMapping
-    public Genre createGenre(@RequestHeader("Authorization") String jwt,@RequestBody Genre req) {
+    public Genre createGenre(@RequestHeader("Authorization") String jwt,@RequestBody GenreDTO req) {
 
         Genre genre = new Genre();
         genre.setTitle(req.getTitle());
@@ -43,7 +44,7 @@ public class AdminGenreController {
     }
 
     @PutMapping("/{id}")
-    public Genre updateGenre(@RequestHeader("Authorization") String jwt,@PathVariable Long id, @RequestBody Genre req) throws Exception {
+    public Genre updateGenre(@RequestHeader("Authorization") String jwt,@PathVariable Long id, @RequestBody GenreDTO req) throws Exception {
         Optional<Genre> optional = genreService.getGenreById(id);
 
         if (optional.isEmpty() ){

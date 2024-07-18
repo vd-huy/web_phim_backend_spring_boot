@@ -1,8 +1,10 @@
 package com.HuyEndy.webphimbackend.service.category;
 
 import com.HuyEndy.webphimbackend.model.Category;
+import com.HuyEndy.webphimbackend.model.Movie;
 import com.HuyEndy.webphimbackend.repository.CategoryRepository;
 import com.HuyEndy.webphimbackend.respone.MessageRespone;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,6 +36,14 @@ public class CategoryService {
     }
 
     public void deleteCategory(Long id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
+
+        // Manually remove relationships
+        for (Movie movie : category.getMovies()) {
+            movie.getCategories().remove(category);
+        }
+        category.getMovies().clear();
         categoryRepository.deleteById(id);
     }
 

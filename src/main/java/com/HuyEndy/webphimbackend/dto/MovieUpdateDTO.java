@@ -1,11 +1,11 @@
 package com.HuyEndy.webphimbackend.dto;
 
-import com.HuyEndy.webphimbackend.model.Country;
+import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.List;
 
-public class MovieDTO {
+
+public class MovieUpdateDTO {
     private String title;
 
     private String originName;
@@ -25,14 +25,7 @@ public class MovieDTO {
 
     private String slugOriginName;
 
-
-    private LocalDate createdAt;
-
     private LocalDate updatedTime;
-
-    private List<Long> categoryIds;
-    private List<Long> countryIds;
-    private List<Long> genreIds;
 
     public String getTitle() {
         return title;
@@ -106,43 +99,11 @@ public class MovieDTO {
         this.slugOriginName = slugOriginName;
     }
 
-    public LocalDate getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public LocalDate getUpdatedTime() {
         return updatedTime;
     }
 
     public void setUpdatedTime(LocalDate updatedTime) {
         this.updatedTime = updatedTime;
-    }
-
-    public List<Long> getCategoryIds() {
-        return categoryIds;
-    }
-
-    public void setCategoryIds(List<Long> categoryIds) {
-        this.categoryIds = categoryIds;
-    }
-
-    public List<Long> getCountryIds() {
-        return countryIds;
-    }
-
-    public void setCountryIds(List<Long> countryIds) {
-        this.countryIds = countryIds;
-    }
-
-    public List<Long> getGenreIds() {
-        return genreIds;
-    }
-
-    public void setGenreIds(List<Long> genreIds) {
-        this.genreIds = genreIds;
     }
 }

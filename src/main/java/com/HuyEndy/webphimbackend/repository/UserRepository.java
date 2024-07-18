@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User,Long> {
-    public User findByEmail(String email);
+    User findByEmail(String email);
 
     @Query("SELECT new com.HuyEndy.webphimbackend.dto.UserStatisticsDTO(u.createdAt, COUNT(u)) " +
             "FROM User u " +

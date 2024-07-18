@@ -1,5 +1,6 @@
 package com.HuyEndy.webphimbackend.controller.category;
 
+import com.HuyEndy.webphimbackend.dto.CategoryDTO;
 import com.HuyEndy.webphimbackend.model.Category;
 import com.HuyEndy.webphimbackend.service.category.CategoryService;
 import com.HuyEndy.webphimbackend.service.slug.SlugService;
@@ -31,7 +32,7 @@ public class AdminCategoryController {
     }
 
     @PostMapping
-    public Category createCategory(@RequestHeader("Authorization") String jwt,@RequestBody Category req) {
+    public Category createCategory(@RequestHeader("Authorization") String jwt,@RequestBody CategoryDTO req) {
 
         Category category = new Category();
         category.setTitle(req.getTitle());
@@ -43,7 +44,7 @@ public class AdminCategoryController {
     }
 
     @PutMapping("/{id}")
-    public Category updateCategory(@RequestHeader("Authorization") String jwt,@PathVariable Long id, @RequestBody Category req) throws Exception {
+    public Category updateCategory(@RequestHeader("Authorization") String jwt,@PathVariable Long id, @RequestBody CategoryDTO req) throws Exception {
         Optional<Category> optional = categoryService.getCategoryById(id);
 
         if (optional.isEmpty() ){

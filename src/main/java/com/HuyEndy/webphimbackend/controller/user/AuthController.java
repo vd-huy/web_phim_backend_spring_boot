@@ -1,6 +1,7 @@
 package com.HuyEndy.webphimbackend.controller.user;
 
 import com.HuyEndy.webphimbackend.config.JwtProvider;
+import com.HuyEndy.webphimbackend.dto.UserDTO;
 import com.HuyEndy.webphimbackend.model.USER_ROLE;
 import com.HuyEndy.webphimbackend.model.User;
 import com.HuyEndy.webphimbackend.repository.UserRepository;
@@ -44,7 +45,7 @@ public class AuthController {
 
 
     @PostMapping("/signup")
-    public ResponseEntity<AuthRespone> createUserHandle(@RequestBody User user) throws Exception {
+    public ResponseEntity<AuthRespone> createUserHandle(@RequestBody UserDTO user) throws Exception {
 
         User isEmailExits = userRepository.findByEmail(user.getEmail());
         if (isEmailExits!=null){
@@ -54,7 +55,7 @@ public class AuthController {
         User createdUser = new User();
         createdUser.setEmail(user.getEmail());
         createdUser.setFullName(user.getFullName());
-        createdUser.setRole(user.getRole());
+        createdUser.setRole(USER_ROLE.ROLE_CUSTOMER);
         createdUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
         User savedUser = userRepository.save(createdUser);

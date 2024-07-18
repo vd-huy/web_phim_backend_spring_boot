@@ -1,5 +1,6 @@
 package com.HuyEndy.webphimbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ public class Category {
     private Boolean status;
 
     @ManyToMany
+    @JsonBackReference
     private List<Movie> movies = new ArrayList<>();
 
 }

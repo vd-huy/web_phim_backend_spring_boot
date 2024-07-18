@@ -1,5 +1,6 @@
 package com.HuyEndy.webphimbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,9 +22,11 @@ public class Comment {
     private LocalDate reviewDate;
 
     @ManyToOne
+    @JsonBackReference
     private Movie movie;
 
     @ManyToOne
+    @JsonBackReference
     private User user;
 
 }

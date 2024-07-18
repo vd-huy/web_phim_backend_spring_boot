@@ -4,9 +4,12 @@ import com.HuyEndy.webphimbackend.model.Movie;
 import org.springframework.data.jpa.domain.Specification;
 
 public class MovieSpecification {
-    public static Specification<Movie> hasTitle(String title) {
+    public static Specification<Movie> hasSlug(String slug) {
         return (root, query, criteriaBuilder) ->
-                criteriaBuilder.like(root.get("title"), "%" + title + "%");
+                criteriaBuilder.or(
+                        criteriaBuilder.like(root.get("slug"), "%" + slug + "%"),
+                        criteriaBuilder.like(root.get("slugOriginName"), "%" + slug + "%")
+                );
     }
 
     public static Specification<Movie> hasGenre(String genre) {

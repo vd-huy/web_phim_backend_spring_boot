@@ -30,19 +30,31 @@ public class MovieService {
         return movieRepository.findAll(pageable);
     }
 
-    public Optional<Movie> getMoviesById(Long id) {
+    public Optional<Movie> getMovieById(Long id) {
         return movieRepository.findById(id);
     }
 
-    public Movie createOrUpdateGenre(Movie movie) {
+    public Movie createOrUpdateMovie(Movie movie) {
         return movieRepository.save(movie);
     }
 
-    public void deleteGenre(Long id) {
+    public void deleteMovie(Long id) {
         movieRepository.deleteById(id);
     }
 
-    public List<Movie> filterMovies(MovieFilterDTO movieFilter) {
-        return movieRepository.findAll(specificationsBuilder.build(movieFilter));
+    public Page<Movie> filterMovies(int page, int size, String sortBy, String direction,MovieFilterDTO movieFilter) {
+        Sort sort = direction.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return movieRepository.findAll(specificationsBuilder.build(movieFilter), pageable);
+    }
+
+//    public List<Movie> searchMovieByName(String movieName) {
+//        return movieRepository.searchMovieByName(movieName);
+//    }
+
+    public Page<Movie> searchMovieByName(int page, int size, String sortBy, String direction, String movieName) {
+        Sort sort = direction.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return movieRepository.searchMovieByName(movieName, pageable);
     }
 }
